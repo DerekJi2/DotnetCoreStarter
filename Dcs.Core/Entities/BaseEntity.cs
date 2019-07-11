@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using System.Text;
 
 namespace Dcs.Core.Entities
 {
-    public class BaseEntity: IBaseEntity
+    public abstract class BaseEntity: IBaseEntity
     {
         public BaseEntity()
         {
@@ -19,19 +21,30 @@ namespace Dcs.Core.Entities
             Deleted = false;
         }
 
+        [Key]
+        [Column(Order = 0)]
         public int Id { get; set; }
 
+        [Column(Order = 1001)]
         public DateTime Created { get; set; }
 
+        [Column(Order = 1002)]
         public DateTime LastModified { get; set; }
 
+        [Column(Order = 1003)]
+        [MaxLength(50)]
         public string CreatedBy { get; set; }
 
+        [Column(Order = 1004)]
+        [MaxLength(50)]
         public string ModifiedBy { get; set; }
 
+        [Column(Order = 1005)]
+        public bool Deleted { get; set; }
+
+        [Column(Order = 1006)]
         public int Version { get; set; }
 
-        public bool Deleted { get; set; }
 
         /// <summary>
         /// 

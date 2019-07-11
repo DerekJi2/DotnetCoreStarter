@@ -28,6 +28,33 @@ namespace Dcs.Core.DbContexts
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        protected void OnModelCreatingBaseEntity(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<IBaseEntity>()
+                .Property(b => b.Deleted)
+                .HasDefaultValue(false);
+
+            modelBuilder.Entity<IBaseEntity>()
+                .Property(b => b.Version)
+                .HasDefaultValue(1);
+
+            modelBuilder.Entity<IBaseEntity>()
+                .Property(b => b.Created)
+                .HasDefaultValueSql("GETDATE()");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            OnModelCreatingBaseEntity(modelBuilder);
+        }
         //Sample
         //public DbSet<BaseEntity> BaseEntity { get; set; }
     }

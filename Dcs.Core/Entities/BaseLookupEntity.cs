@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Dcs.Core.Entities
@@ -15,11 +17,29 @@ namespace Dcs.Core.Entities
             ParentLookupId = null;
         }
 
+        [MaxLength(20)]
+        [Column(Order = 1)]
+        public string Kind { get; set; }
+
+        [MaxLength(20)]
+        [Column(Order = 2)]
         public string Code { get; set; }
+
+        [MaxLength(50)]
+        [Column(Order = 3)]
         public string DisplayName { get; set; }
+
+        [MaxLength(255)]
+        [Column(Order = 4)]
         public string Description { get; set; }
+
+        [Column(Order = 5)]
+        [ForeignKey("Parent")]
+        public int? ParentLookupId { get; set; }
+
+        [Column(TypeName = "text", Order = 6)]
         public string Json { get; set; }
 
-        public int? ParentLookupId { get; set; }
+        public IBaseLookupEntity Parent { get; set; }
     }
 }
