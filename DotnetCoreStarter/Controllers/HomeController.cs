@@ -5,11 +5,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DotnetCoreStarter.Models;
+using Dcs.Core.Services;
 
 namespace DotnetCoreStarter.Controllers
 {
     public class HomeController : Controller
     {
+        protected IBaseService _service;
+        public HomeController(IBaseService service)
+        {
+            this._service = service;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -24,7 +31,8 @@ namespace DotnetCoreStarter.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            var userId = this._service.UserId();
+            ViewData["Message"] = $"Your contact page. {userId}";
 
             return View();
         }
