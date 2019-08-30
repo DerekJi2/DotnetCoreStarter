@@ -1,0 +1,5 @@
+﻿Understanding Action Filters (C#)
+https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions-1/controllers-and-routing/understanding-action-filters-cs
+
+Dependency Injection in action filters in ASP.NET Core
+https://www.devtrends.co.uk/blog/dependency-injection-in-action-filters-in-asp.net-core
