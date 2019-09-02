@@ -32,17 +32,18 @@ namespace Dcs.Core.DbContexts
         /// 
         /// </summary>
         /// <param name="modelBuilder"></param>
-        protected void OnModelCreatingBaseEntity(ModelBuilder modelBuilder)
+        protected void OnModelCreatingBaseEntity<T>(ModelBuilder modelBuilder)
+            where T: BaseEntity
         {
-            modelBuilder.Entity<IBaseEntity>()
+            modelBuilder.Entity<T>()
                 .Property(b => b.Deleted)
                 .HasDefaultValue(false);
 
-            modelBuilder.Entity<IBaseEntity>()
+            modelBuilder.Entity<T>()
                 .Property(b => b.Version)
                 .HasDefaultValue(1);
 
-            modelBuilder.Entity<IBaseEntity>()
+            modelBuilder.Entity<T>()
                 .Property(b => b.Created)
                 .HasDefaultValueSql("GETDATE()");
         }
@@ -53,9 +54,12 @@ namespace Dcs.Core.DbContexts
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            OnModelCreatingBaseEntity(modelBuilder);
+            OnModelCreatingBaseEntity<UserAccount>(modelBuilder);
         }
         //Sample
         //public DbSet<BaseEntity> BaseEntity { get; set; }
+        // dotnet ef --startup-project ..\DotnetCoreStarter\ migrations add Initial
+        // dotnet ef --startup-project ..\DotnetCoreStarter\ database update
+        public DbSet<UserAccount> UserAccounts { get; set; }
     }
 }

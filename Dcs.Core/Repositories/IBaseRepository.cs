@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Dcs.Core.Repositories
 {
     public interface IBaseRepository<TEntity> 
-        where TEntity: IBaseEntity
+        where TEntity: BaseEntity
     {
         DcsDbContext localDbContext { get; set; }
 

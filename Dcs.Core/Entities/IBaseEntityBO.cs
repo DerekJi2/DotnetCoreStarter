@@ -6,9 +6,8 @@ using System.Text;
 
 namespace Dcs.Core.Entities
 {
-    public interface IBaseEntity
+    public interface IBaseEntityBO
     {
-        #region Properties
         [Key]
         [Column(Order = 0)]
         int Id { get; set; }
@@ -32,27 +31,8 @@ namespace Dcs.Core.Entities
 
         [Column(Order = 1006)]
         int Version { get; set; }
-        #endregion Properties
 
-        #region Methods
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        bool Equals(object obj);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        int GetHashCode();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        string ToString();
-        #endregion Methods
+        [Column(Order = 1007)]
+        string Guid { get; set; }
     }
 }

@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Dcs.Core.Repositories
 {
-    public class BaseRepository<TEntity>
-        where TEntity : class, IBaseEntity
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity>
+        where TEntity : BaseEntity
     {
-        protected DcsDbContext localDbContext { get; set; }
+        public DcsDbContext localDbContext { get; set; }
 
         protected DbSet<TEntity> localDbSet
         {

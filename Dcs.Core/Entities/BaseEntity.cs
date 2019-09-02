@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Dcs.Core.Entities
 {
-    public abstract class BaseEntity: IBaseEntity
+    public abstract class BaseEntity: IBaseEntityBO, IBaseEntityBiz
     {
         public BaseEntity()
         {
@@ -19,6 +19,7 @@ namespace Dcs.Core.Entities
             ModifiedBy = "";
             Version = 1;
             Deleted = false;
+            Guid = System.Guid.NewGuid().ToString();
         }
 
         [Key]
@@ -44,6 +45,9 @@ namespace Dcs.Core.Entities
 
         [Column(Order = 1006)]
         public int Version { get; set; }
+        
+        [Column(Order = 1007)]
+        public string Guid { get; set; }
 
 
         /// <summary>

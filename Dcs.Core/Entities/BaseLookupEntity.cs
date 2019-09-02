@@ -29,15 +29,18 @@ namespace Dcs.Core.Entities
         [Column(Order = 3)]
         public string DisplayName { get; set; }
 
-        [MaxLength(255)]
         [Column(Order = 4)]
+        public int? DisplayOrder { get; set; }
+
+        [MaxLength(255)]
+        [Column(Order = 5)]
         public string Description { get; set; }
 
-        [Column(Order = 5)]
+        [Column(Order = 501)]
         [ForeignKey("Parent")]
         public int? ParentLookupId { get; set; }
 
-        [Column(TypeName = "text", Order = 6)]
+        [Column(TypeName = "text", Order = 502)]
         public string Json { get; set; }
 
         public IBaseLookupEntity Parent { get; set; }
