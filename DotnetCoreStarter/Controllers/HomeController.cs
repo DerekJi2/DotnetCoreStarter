@@ -5,11 +5,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DotnetCoreStarter.Models;
+using DotnetCoreStarter.Utilities.ActionFilters;
+using Microsoft.Extensions.Logging;
 
 namespace DotnetCoreStarter.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
+        public HomeController(ILogger<ILogActionFilter> logger)
+            : base(logger)
+        {
+
+        }
+
         public IActionResult Index()
         {
             return View();
