@@ -6,16 +6,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DotnetCoreStarter.Models;
 using Dcs.Core.Services;
+using DotnetCoreStarter.Utilities.ActionFilters;
+using Microsoft.Extensions.Logging;
 
 namespace DotnetCoreStarter.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        protected IBaseService _service;
-        public HomeController(IBaseService service)
+        public HomeController(ILogger<ILogActionFilter> logger,
+            IBaseService service)
+            : base(logger)
         {
             this._service = service;
         }
+
+        protected IBaseService _service;
 
         public IActionResult Index()
         {

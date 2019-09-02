@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DotnetCoreStarter.Models;
 using Dcs.Core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,8 +14,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DotnetCoreStarter
 {
-    public class Startup
+    public partial class Startup
     {
+        protected readonly string AllowSpecificOrigins = "localhost";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,6 +28,8 @@ namespace DotnetCoreStarter
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ConfigureCORS(services);
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -33,6 +38,7 @@ namespace DotnetCoreStarter
             });
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            InejctInfrastructures(services);
 
             services.AddScoped<IBaseService, BaseService>();
 
@@ -52,6 +58,8 @@ namespace DotnetCoreStarter
                 app.UseHsts();
             }
 
+            app.UseCors(AllowSpecificOrigins);
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -62,6 +70,29 @@ namespace DotnetCoreStarter
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        public void ConfigureCORS(IServiceCollection services)
+        {
+            var corsConfig = new CorsAppSetting();
+            Configuration.GetSection("CORS").Bind(corsConfig);
+
+            if (corsConfig != null && corsConfig.AllowedUrls != null && corsConfig.AllowedUrls.Length > 0)
+            {
+                services.AddCors(options =>
+                {
+                    options.AddPolicy(AllowSpecificOrigins,
+                    builder =>
+                    {
+                        foreach (var origin in corsConfig.AllowedUrls)
+                        {
+                            builder = builder.WithOrigins(origin);
+                        }
+                        builder.AllowAnyMethod()
+                                .AllowAnyHeader();
+                    });
+                });
+            }
         }
     }
 }
