@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Dcs.Core.Entities
 {
-    public class BaseLookupEntity : BaseEntity, IBaseLookupEntity
+    public class BaseLookupEntity : BaseEntity, IBaseEntityBO, IBaseEntityBiz, IBaseLookupEntity
     {
         public BaseLookupEntity() : base()
         {

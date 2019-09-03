@@ -9,11 +9,13 @@ namespace Dcs.Core.DbContexts
 {
     public class DcsDbContext : DbContext
     {
-        private readonly string connectionString;
+        private readonly string _ConnectionString;
+        protected readonly DbContextOptions<DcsDbContext> _DbContectOptions;
 
-        public DcsDbContext(IConfiguration configuration) : base()
+        public DcsDbContext(DbContextOptions<DcsDbContext> options, string connectionString) : base()
         {
-            this.connectionString = configuration.GetConnectionString("Default");
+            _DbContectOptions = options;
+            _ConnectionString = connectionString;
         }
 
         /// <summary>
@@ -24,7 +26,7 @@ namespace Dcs.Core.DbContexts
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(connectionString);
+                optionsBuilder.UseSqlServer(_ConnectionString);
             }
         }
 
@@ -58,8 +60,8 @@ namespace Dcs.Core.DbContexts
         }
         //Sample
         //public DbSet<BaseEntity> BaseEntity { get; set; }
-        // dotnet ef --startup-project ..\DotnetCoreStarter\ migrations add Initial
-        // dotnet ef --startup-project ..\DotnetCoreStarter\ database update
+        // dotnet ef migrations add "xxx"
+        // dotnet ef database update
         public DbSet<UserAccount> UserAccounts { get; set; }
     }
 }

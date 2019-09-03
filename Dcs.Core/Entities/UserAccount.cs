@@ -5,21 +5,21 @@ using System.Text;
 
 namespace Dcs.Core.Entities
 {
-    public class UserAccount : BaseEntity, IBaseEntityBO, IBaseEntityBiz
+    public class UserAccount : BaseEntity
     {
-        [Column(Order = 101)]
+        [Column(Order = 2)]
         public string UserName { get; set; }
 
-        [Column(Order = 102)]
+        [Column(Order = 3)]
         public string DisplayName { get; set; }
 
-        [Column(Order = 103)]
+        [Column(Order = 4)]
         public string Email { get; set; }
 
-        [Column(Order = 104)]
+        [Column(Order = 5)]
         public string Phone { get; set; }
 
-        [Column(Order = 105)]
+        [Column(Order = 1)]
         public string Address { get; set; }
     }
 }

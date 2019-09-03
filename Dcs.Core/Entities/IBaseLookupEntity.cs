@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Dcs.Core.Entities
 {
-    public interface IBaseLookupEntity
+    public interface IBaseLookupEntity : IBaseEntityBO
     {
         #region Properties
         [MaxLength(20)]
