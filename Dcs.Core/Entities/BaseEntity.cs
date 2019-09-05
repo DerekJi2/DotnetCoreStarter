@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dcs.Core.Classes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Dcs.Core.Entities
 {
-    public abstract class BaseEntity: IBaseEntityBO, IBaseEntityBiz
+    public abstract class BaseEntity: BaseClass, IBaseEntityBO, IBaseEntityBiz
     {
         public BaseEntity()
         {
