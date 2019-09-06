@@ -76,27 +76,5 @@ namespace DotnetCoreStarter
             });
         }
 
-        public void ConfigureCORS(IServiceCollection services)
-        {
-            var corsConfig = new CorsAppSetting();
-            Configuration.GetSection("CORS").Bind(corsConfig);
-
-            if (corsConfig != null && corsConfig.AllowedUrls != null && corsConfig.AllowedUrls.Length > 0)
-            {
-                services.AddCors(options =>
-                {
-                    options.AddPolicy(AllowSpecificOrigins,
-                    builder =>
-                    {
-                        foreach (var origin in corsConfig.AllowedUrls)
-                        {
-                            builder = builder.WithOrigins(origin);
-                        }
-                        builder.AllowAnyMethod()
-                                .AllowAnyHeader();
-                    });
-                });
-            }
-        }
     }
 }
