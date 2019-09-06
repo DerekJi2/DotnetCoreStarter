@@ -8,48 +8,34 @@ using System.Text;
 
 namespace Dcs.Core.Entities
 {
-    public abstract class BaseEntity: BaseClass, IBaseEntityBO, IBaseEntityBiz
+    /// <summary>
+    /// A shortcut of <see cref="Entity{TPrimaryKey}"/> for most used primary key type (<see cref="int"/>).
+    /// </summary>
+    [Serializable]
+    public abstract class Entity : Entity<int>, IEntity
     {
-        public BaseEntity()
+        public Entity()
         {
-            var now = DateTime.Now;
-            Id = 0;
-            Created = now;
-            LastModified = now;
-            CreatedBy = "";
-            ModifiedBy = "";
+            Id = 0;            
+        }
+
+    }
+
+    [Serializable]
+    public abstract class Entity<TPrimaryKey>: BaseClass, IEntity<TPrimaryKey>, IEntityMethods
+    {
+        public Entity()
+        {
             Version = 1;
-            Deleted = false;
             Guid = System.Guid.NewGuid().ToString();
         }
 
         [Key]
-        [Column(Order = 0)]
-        public int Id { get; set; }
+        public virtual TPrimaryKey Id { get; set; }
 
-        [Column(Order = 1001)]
-        public DateTime Created { get; set; }
+        public virtual string Guid { get; set; }
 
-        [Column(Order = 1002)]
-        public DateTime LastModified { get; set; }
-
-        [Column(Order = 1003)]
-        [MaxLength(50)]
-        public string CreatedBy { get; set; }
-
-        [Column(Order = 1004)]
-        [MaxLength(50)]
-        public string ModifiedBy { get; set; }
-
-        [Column(Order = 1005)]
-        public bool Deleted { get; set; }
-
-        [Column(Order = 1006)]
-        public int Version { get; set; }
-        
-        [Column(Order = 1007)]
-        public string Guid { get; set; }
-
+        public virtual int? Version { get; set; }
 
         /// <summary>
         /// 
@@ -58,7 +44,7 @@ namespace Dcs.Core.Entities
         /// <returns></returns>
         public override bool Equals(object obj)
         {
-            if (obj == null || !(obj is BaseEntity))
+            if (obj == null || !(obj is Entity<TPrimaryKey>))
             {
                 return false;
             }
@@ -70,7 +56,7 @@ namespace Dcs.Core.Entities
             }
 
             //Transient objects are not considered as equal
-            var other = (BaseEntity)obj;
+            var other = (Entity<TPrimaryKey>)obj;
 
             //Must have a IS-A relation of types or must be same type
             var typeOfThis = GetType();
@@ -98,7 +84,7 @@ namespace Dcs.Core.Entities
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(BaseEntity left, BaseEntity right)
+        public static bool operator == (Entity<TPrimaryKey> left, Entity<TPrimaryKey> right)
         {
             if (Equals(left, null))
             {
@@ -114,7 +100,7 @@ namespace Dcs.Core.Entities
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(BaseEntity left, BaseEntity right)
+        public static bool operator != (Entity<TPrimaryKey> left, Entity<TPrimaryKey> right)
         {
             return !(left == right);
         }

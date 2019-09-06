@@ -1,9 +1,5 @@
 ﻿using Dcs.Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Dcs.Core.DbContexts
 {
@@ -12,7 +8,7 @@ namespace Dcs.Core.DbContexts
         private readonly string _ConnectionString;
         protected readonly DbContextOptions<DcsDbContext> _DbContectOptions;
 
-        public DcsDbContext(DbContextOptions<DcsDbContext> options, string connectionString) : base()
+        public DcsDbContext(DbContextOptions<DcsDbContext> options, string connectionString) : base(options)
         {
             _DbContectOptions = options;
             _ConnectionString = connectionString;
@@ -35,19 +31,13 @@ namespace Dcs.Core.DbContexts
         /// </summary>
         /// <param name="modelBuilder"></param>
         protected void OnModelCreatingBaseEntity<T>(ModelBuilder modelBuilder)
-            where T: BaseEntity
+            where T : FullAuditedEntity
         {
-            modelBuilder.Entity<T>()
-                .Property(b => b.Deleted)
-                .HasDefaultValue(false);
+            modelBuilder.Entity<T>().Property(b => b.IsDeleted).HasDefaultValue(false);
 
-            modelBuilder.Entity<T>()
-                .Property(b => b.Version)
-                .HasDefaultValue(1);
+            modelBuilder.Entity<T>().Property(b => b.Version).HasDefaultValue(1);
 
-            modelBuilder.Entity<T>()
-                .Property(b => b.Created)
-                .HasDefaultValueSql("GETDATE()");
+            modelBuilder.Entity<T>().Property(b => b.CreationTime).HasDefaultValueSql("GETDATE()");
         }
 
         /// <summary>
@@ -58,6 +48,7 @@ namespace Dcs.Core.DbContexts
         {
             OnModelCreatingBaseEntity<UserAccount>(modelBuilder);
         }
+
         //Sample
         //public DbSet<BaseEntity> BaseEntity { get; set; }
         // dotnet ef migrations add "xxx"

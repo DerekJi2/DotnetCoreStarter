@@ -1,5 +1,6 @@
 ﻿using Dcs.Core.DbContexts;
 using Dcs.Core.Entities;
+using Dcs.Core.Entities.Bases;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 namespace Dcs.Core.Repositories
 {
     public interface IBaseRepository<TEntity> 
-        where TEntity: BaseEntity
+        where TEntity: IBaseEntity
     {
         DcsDbContext localDbContext { get; set; }
 

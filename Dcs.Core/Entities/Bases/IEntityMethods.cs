@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Dcs.Core.Entities
 {
-    interface IBaseEntityBiz
+    /// <summary>
+    /// Base Entity Methods
+    /// </summary>
+    interface IEntityMethods
     {
         /// <summary>
         /// 

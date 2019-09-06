@@ -1,5 +1,6 @@
 ﻿using Dcs.Core.DbContexts;
 using Dcs.Core.Entities;
+using Dcs.Core.Entities.Bases;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace Dcs.Core.Repositories
         /// <returns></returns>
         public IQueryable<TEntity> FindAll(bool? active = true)
         {
-            return localDbSet.Where(entity => !active.HasValue || entity.Deleted == !active);
+            return localDbSet.Where(entity => !active.HasValue || entity.IsDeleted == !active);
         }
 
         /// <summary>
@@ -47,7 +48,7 @@ namespace Dcs.Core.Repositories
         {
             return localDbSet
                 .AsNoTracking()
-                .Where(entity => !active.HasValue || entity.Deleted == !active);
+                .Where(entity => !active.HasValue || entity.IsDeleted == !active);
         }
 
         /// <summary>
@@ -140,7 +141,7 @@ namespace Dcs.Core.Repositories
             try
             {
                 var entity = await FindByIdAsync(id);
-                entity.Deleted = true;
+                entity.IsDeleted = true;
                 await UpdateAsync(id, entity);
                 return true;
             }
@@ -160,7 +161,7 @@ namespace Dcs.Core.Repositories
             try
             {
                 var entity = await FindByIdAsync(id, false);
-                entity.Deleted = true;
+                entity.IsDeleted = true;
                 await UpdateAsync(id, entity);
 
                 return true;

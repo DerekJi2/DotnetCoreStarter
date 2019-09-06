@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dcs.Core.Entities.Bases;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -19,7 +20,9 @@ namespace Dcs.Core.Entities
         [Column(Order = 5)]
         public string Phone { get; set; }
 
-        [Column(Order = 1)]
+        [Column(Order = 6)]
         public string Address { get; set; }
+
+
     }
 }
